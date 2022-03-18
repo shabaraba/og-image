@@ -11,7 +11,7 @@ const rglr = readFileSync(`${__dirname}/../_fonts/Inter-Regular.woff2`).toString
 const bold = readFileSync(`${__dirname}/../_fonts/Inter-Bold.woff2`).toString('base64');
 const mono = readFileSync(`${__dirname}/../_fonts/Vera-Mono.woff2`).toString('base64');
 
-function getCss(theme: string, fontSize: string) {
+function getCss(theme: string, fontSize: string, bg: string) {
     let background = 'white';
     let foreground = 'black';
     let radial = 'lightgray';
@@ -21,7 +21,24 @@ function getCss(theme: string, fontSize: string) {
         foreground = 'white';
         radial = 'dimgray';
     }
+    let backgroundCss = `
+        background: ${background};
+        background-image: radial-gradient(circle at 25px 25px, ${radial} 2%, transparent 0%), radial-gradient(circle at 75px 75px, ${radial} 2%, transparent 0%);
+        background-size: 100px 100px;
+    `;
+    if (bg !== '') {
+        backgroundCss = `
+            background-image: url(${bg});
+            background-size: cover;
+            background-position : center center;
+        `;
+    }
+
     return `
+    @import url('https://fonts.googleapis.com/css?family=M+PLUS+1p');
+    @import url('https://cdn.jsdelivr.net/npm/yakuhanjp@3.4.1/dist/css/yakuhanjp.min.css');
+    @import url('https://fonts.googleapis.com/css2?family=Caveat&display=swap');
+
     @font-face {
         font-family: 'Inter';
         font-style:  normal;
@@ -44,19 +61,18 @@ function getCss(theme: string, fontSize: string) {
       }
 
     body {
-        background: ${background};
-        background-image: radial-gradient(circle at 25px 25px, ${radial} 2%, transparent 0%), radial-gradient(circle at 75px 75px, ${radial} 2%, transparent 0%);
-        background-size: 100px 100px;
+        ${backgroundCss}
         height: 100vh;
         display: flex;
         text-align: center;
         align-items: center;
         justify-content: center;
+        position:relative;
     }
 
     code {
         color: #D400FF;
-        font-family: 'Vera';
+        font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
         white-space: pre-wrap;
         letter-spacing: -5px;
     }
@@ -85,6 +101,11 @@ function getCss(theme: string, fontSize: string) {
 
     .spacer {
         margin: 150px;
+        padding-top: 50px;
+        padding-bottom: 50px;
+        padding-right: 100px;
+        padding-left: 100px;
+        background: rgba(232,207,193, 0.7)
     }
 
     .emoji {
@@ -94,36 +115,56 @@ function getCss(theme: string, fontSize: string) {
         vertical-align: -0.1em;
     }
     
+    .logo-text {
+        font-family: 'Caveat', cursive;
+        font-size: 150px;
+        color: ${foreground};
+        transform: rotate(-5deg);
+        position: absolute;
+        bottom: -50px;
+        right: 100px;
+    }
+
     .heading {
-        font-family: 'Inter', sans-serif;
+        font-family: YakuHanJPs, sans-serif;
         font-size: ${sanitizeHtml(fontSize)};
         font-style: normal;
         color: ${foreground};
         line-height: 1.8;
-    }`;
+        margin: 30px;
+    }
+
+    .image-body {
+        position: relative;
+        height: 100vh;
+        width: 100vw;
+    }
+  `;
 }
 
 export function getHtml(parsedReq: ParsedRequest) {
-    const { text, theme, md, fontSize, images, widths, heights } = parsedReq;
+    const { text, theme, md, fontSize, images, siteTitle, bg, widths, heights } = parsedReq;
     return `<!DOCTYPE html>
 <html>
     <meta charset="utf-8">
     <title>Generated Image</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        ${getCss(theme, fontSize)}
+        ${getCss(theme, fontSize, bg)}
     </style>
     <body>
-        <div>
-            <div class="spacer">
+        <div class="spacer">
             <div class="logo-wrapper">
                 ${images.map((img, i) =>
                     getPlusSign(i) + getImage(img, widths[i], heights[i])
                 ).join('')}
             </div>
-            <div class="spacer">
             <div class="heading">${emojify(
                 md ? marked(text) : sanitizeHtml(text)
+            )}
+            </div>
+            <div class="logo-text">${emojify(
+                md ? marked(siteTitle) : sanitizeHtml(siteTitle)
             )}
             </div>
         </div>
