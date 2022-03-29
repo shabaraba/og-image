@@ -37,6 +37,7 @@ function getCss(theme: string, fontSize: string, bg: string) {
     return `
     @import "yakuhanjp"
     @import url('https://fonts.googleapis.com/css?family=M+PLUS+1p');
+    @import url('https://fonts.googleapis.com/css?family=M+PLUS+1p');
     @import url('https://fonts.googleapis.com/css2?family=Caveat&display=swap');
 
     @font-face {
@@ -126,7 +127,7 @@ function getCss(theme: string, fontSize: string, bg: string) {
     }
 
     .heading {
-        font-family: YakuHanJPs, sans-serif;
+        font-family: 'M PLUS 1p', 'Inter', sans-serif;
         font-size: ${sanitizeHtml(fontSize)};
         font-style: normal;
         color: ${foreground};
