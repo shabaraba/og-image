@@ -35,8 +35,8 @@ function getCss(theme: string, fontSize: string, bg: string) {
     }
 
     return `
+    @import "yakuhanjp"
     @import url('https://fonts.googleapis.com/css?family=M+PLUS+1p');
-    @import url('https://cdn.jsdelivr.net/npm/yakuhanjp@3.4.1/dist/css/yakuhanjp.min.css');
     @import url('https://fonts.googleapis.com/css2?family=Caveat&display=swap');
 
     @font-face {
