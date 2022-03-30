@@ -37,8 +37,8 @@ function getCss(theme: string, fontSize: string, bg: string) {
     }
 
     return `
-    @import "yakuhanjp"
     @import url('https://fonts.googleapis.com/css?family=M+PLUS+1p');
+    @import url('https://cdn.jsdelivr.net/npm/yakuhanjp@3.4.1/dist/css/yakuhanjp_s.min.css');
     @import url('https://fonts.googleapis.com/css2?family=Caveat&display=swap');
 
     @font-face {
@@ -133,7 +133,7 @@ function getCss(theme: string, fontSize: string, bg: string) {
     }
 
     .heading {
-        font-family: 'M PLUS 1p', 'Inter', sans-serif;
+        font-family: YakuHanJPs,'M PLUS 1p', 'Inter', sans-serif;
         font-size: ${sanitizeHtml(fontSize)};
         font-style: normal;
         color: ${foreground};
@@ -154,6 +154,12 @@ export function getHtml(parsedReq: ParsedRequest) {
     const { text, theme, md, fontSize, images, siteTitle, bg, widths, heights } = parsedReq;
     return `<!DOCTYPE html>
 <html>
+    <head>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.3/dist/katex.min.css" integrity="sha384-ThssJ7YtjywV52Gj4JE/1SQEDoMEckXyhkFVwaf4nDSm5OBlXeedVYjuuUd0Yua+" crossorigin="anonymous">
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.3/dist/katex.min.js" integrity="sha384-Bi8OWqMXO1ta+a4EPkZv7bYGIes7C3krGSZoTGNTAnAn5eYQc7IIXrJ/7ck1drAi" crossorigin="anonymous"></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.3/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+    </head>
     <meta charset="utf-8">
     <title>Generated Image</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
