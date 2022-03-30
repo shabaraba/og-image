@@ -29,6 +29,8 @@ function getCss(theme: string, fontSize: string, bg: string) {
     if (bg !== '') {
         backgroundCss = `
             background-image: url(${bg});
+            background-color:rgba(255,255,255,0.3);
+            background-blend-mode:lighten;
             background-size: cover;
             background-position : center center;
         `;
@@ -36,7 +38,6 @@ function getCss(theme: string, fontSize: string, bg: string) {
 
     return `
     @import "yakuhanjp"
-    @import url('https://fonts.googleapis.com/css?family=M+PLUS+1p');
     @import url('https://fonts.googleapis.com/css?family=M+PLUS+1p');
     @import url('https://fonts.googleapis.com/css2?family=Caveat&display=swap');
 
@@ -83,11 +84,11 @@ function getCss(theme: string, fontSize: string, bg: string) {
     }
 
     .logo-wrapper {
-        display: flex;
-        align-items: center;
-        align-content: center;
-        justify-content: center;
-        justify-items: center;
+        display: float;
+        // align-items: center;
+        // align-content: center;
+        // justify-content: center;
+        // justify-items: center;
     }
 
     .logo {
@@ -101,12 +102,16 @@ function getCss(theme: string, fontSize: string, bg: string) {
     }
 
     .spacer {
-        margin: 150px;
+        width: 65%;
+        height: 65%;
         padding-top: 50px;
         padding-bottom: 50px;
         padding-right: 100px;
         padding-left: 100px;
-        background: rgba(232,207,193, 0.7)
+        background: rgba(232,207,193, 0.7);
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .emoji {
@@ -124,6 +129,7 @@ function getCss(theme: string, fontSize: string, bg: string) {
         position: absolute;
         bottom: -50px;
         right: 100px;
+        filter: drop-shadow(6px 3px 1.5px #fcfcfc);
     }
 
     .heading {
@@ -131,8 +137,9 @@ function getCss(theme: string, fontSize: string, bg: string) {
         font-size: ${sanitizeHtml(fontSize)};
         font-style: normal;
         color: ${foreground};
-        line-height: 1.8;
-        margin: 30px;
+        line-height: 1.2;
+        word-wrap: break-word;
+        width: 100%;
     }
 
     .image-body {
